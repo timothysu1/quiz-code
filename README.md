@@ -13,7 +13,8 @@ This webpage allows for the user to create a randomly generated password they ca
 ## Usage
 
 ## Learning Points 
-* 
+* How to store information on the user's local storage
+
 
 ## Important Code
 
