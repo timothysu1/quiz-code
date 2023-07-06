@@ -8,23 +8,20 @@ var highscoreView = document.querySelector(".highscore-view");
 var highscoreRedirect = document.querySelector(".highscore-redirect");
 var returnHome = document.querySelector(".return-home");
 var clearScores = document.querySelector(".clear-scores");
-
-var quizQuestion = {
-  "question1":["A","B","C","D",1],
-  "question2":["A","B","C","D",3],
-  "question3":["A","B","C","D",0],
-  "question4":["A","B","C","D",2],
-  "question5":["A","B","C","D",1],
-}
+var q1 = document.querySelector(".q1")
+var q2 = document.querySelector(".q2")
+var q3 = document.querySelector(".q3")
+var q4 = document.querySelector(".q4")
+var q5 = document.querySelector(".q5")
 
 //click start button
-startBtn.addEventListener("click", displayQuiz);
+startBtn.addEventListener("click", displayQ1);
 
 highscoreRedirect.addEventListener("click", displayHighscore);
 
 returnHome.addEventListener("click", displayHome);
 
-clearScores.addEventListener("click", clearHighscore)
+clearScores.addEventListener("click", clearHighscore);
 
 //timer starts and question appears
 
@@ -35,21 +32,51 @@ clearScores.addEventListener("click", clearHighscore)
 } */
 
 //startscreen disapears and first question appears
-function displayHome(){
-  startScreen.style.display = "flex";
+function displayHome() {
   highscoreView.style.display = "none";
-}
-
-function displayQuiz() {
-  startScreen.style.display = "none";
-  quizQame.style.display = "flex";
+  startScreen.style.display = "flex";
 }
 
 function displayHighscore() {
   startScreen.style.display = "none";
-  quizQame.style.display = "none";
+  /* quizQame.style.display = "none"; */
   quizEnd.style.display = "none";
   highscoreView.style.display = "flex";
+  hideQuiz();
+}
+
+function displayQ1() {
+  startScreen.style.display = "none";
+  q1.style.display = "flex";
+}
+
+function displayQ2() {
+  q1.style.display = "none";
+  q2.style.display = "flex";
+}
+function displayQ3() {
+  q2.style.display = "none";
+  q3.style.display = "flex";
+}
+function displayQ4() {
+  q3.style.display = "none";
+  q4.style.display = "flex";
+}
+function displayQ5() {
+  q4.style.display = "none";
+  q5.style.display = "flex";
+}
+function displayEnd() {
+  quizEnd.style.display = "flex";
+  hideQuiz()
+}
+
+function hideQuiz() {
+  q1.style.display = "none";
+  q2.style.display = "none";
+  q3.style.display = "none";
+  q4.style.display = "none";
+  q5.style.display = "none";
 }
 //When question is answered correctly
 
@@ -65,15 +92,16 @@ function displayHighscore() {
 
 
 //clear highscore when button is pressed
-function clearHighscore(){
+function clearHighscore() {
 
 }
 
 
 
 function init() {
-  quizQame.style.display = "none";
+  /* quizQame.style.display = "none"; */
   quizEnd.style.display = "none";
   highscoreView.style.display = "none";
+  hideQuiz();
 }
 init();
