@@ -84,7 +84,7 @@ function startGame() {
       timerEl.textContent = secondsLeft;
     }
     scoreValue.textContent = secondsLeft;
-    return(secondsLeft);
+    return (secondsLeft);
 
   }
 
@@ -108,65 +108,67 @@ function startGame() {
     elem.addEventListener("click", answerQ5)
   });
 
+
+  //
   function answerQ1(event) {
     if (event.target.className == "response1 wrong") {
       secondsLeft -= 15;
       timerEl.textContent = secondsLeft;
-      displayQ2();
-    } else {
-      displayQ2();
     }
+    displayQ2();
   }
 
   function answerQ2(event) {
     if (event.target.className == "response2 wrong") {
       secondsLeft -= 15;
       timerEl.textContent = secondsLeft;
-      displayQ3();
-    } else {
-      displayQ3();
     }
+    displayQ3();
   }
 
   function answerQ3(event) {
     if (event.target.className == "response3 wrong") {
       secondsLeft -= 15;
       timerEl.textContent = secondsLeft;
-      displayQ4();
-    } else {
-      displayQ4();
     }
+    displayQ4();
   }
   function answerQ4(event) {
     if (event.target.className == "response4 wrong") {
       secondsLeft -= 15;
       timerEl.textContent = secondsLeft;
-      displayQ5();
-    } else {
-      displayQ5();
     }
+    displayQ5();
   }
   function answerQ5(event) {
     if (event.target.className == "response5 wrong") {
       secondsLeft -= 15;
       timerEl.textContent = secondsLeft;
-      displayEnd();
-    } else {
-      displayEnd();
     }
+    displayEnd();
   }
 
+
+  //submit score button
 
   function submitScore(event) {
-  var userName = document.querySelector("#userName").value;
-  var points = secondsLeft;
-  event.preventDefault();
-  if (userName ===""){
+    event.preventDefault();
+
+    /* var userName = '';
+    var points = ''; */
+
+    if (userName === "") {
+      displayHighscore();
+    }else {
+    var nameScore = {
+      userScore: [document.querySelector("#userName").value.trim(),secondsLeft]
+    };
+    console.log(nameScore);
+    localStorage.setItem("nameScoreStringify", JSON.stringify(nameScore));
+    
     displayHighscore();
-  }
-  displayHighscore();
-}
-submitBtn.addEventListener("click", submitScore);
+  }}
+  submitBtn.addEventListener("click", submitScore);
 
 
 }
@@ -186,6 +188,11 @@ function displayHighscore() {
   quizEnd.style.display = "none";
   highscoreView.style.display = "flex";
   hideQuiz();
+
+  var lastScore = JSON.parse(localStorage.getItem("nameScoreStringify"));
+
+
+
 }
 
 
@@ -218,7 +225,7 @@ function hideQuiz() {
 
 //clear highscore when button is pressed
 function clearHighscore() {
-
+  localStorage.clear();
 }
 
 
