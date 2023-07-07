@@ -9,8 +9,9 @@ var quizQame = document.querySelector(".quiz-game");
 var quizEnd = document.querySelector(".quiz-end");
 var highscoreView = document.querySelector(".highscore-view");
 var highscoreRedirect = document.querySelector(".highscore-redirect");
+var highscorePrevious = document.querySelector(".highscore-previous");
 var scoreValue = document.querySelector(".score-value");
-
+var userName = document.querySelector("#userName");
 
 var q1 = document.querySelector(".q1")
 var q2 = document.querySelector(".q2")
@@ -25,7 +26,7 @@ var response4 = document.querySelectorAll(".response4")
 var response5 = document.querySelectorAll(".response5")
 
 var nameScore = {};
-
+var lastScore = {};
 
 
 //click start button
@@ -143,31 +144,24 @@ function startGame() {
   function answerQ5(event) {
     if (event.target.className == "response5 wrong") {
       secondsLeft -= 15;
-      timerEl.textContent = secondsLeft;
     }
     displayEnd();
   }
 
-
-  //submit score button
-
+  //When game ends a prompt to save user's initial and highscore appears
   function submitScore(event) {
     event.preventDefault();
-
-    /* var userName = '';
-    var points = ''; */
-
     if (userName === "") {
+      return;
+    } else {
+      var nameScore = {
+        userScore: [document.querySelector("#userName").value.trim(), secondsLeft]
+      };
+      localStorage.setItem("nameScoreStringify", JSON.stringify(nameScore));
+
       displayHighscore();
-    }else {
-    var nameScore = {
-      userScore: [document.querySelector("#userName").value.trim(),secondsLeft]
-    };
-    console.log(nameScore);
-    localStorage.setItem("nameScoreStringify", JSON.stringify(nameScore));
-    
-    displayHighscore();
-  }}
+    }
+  }
   submitBtn.addEventListener("click", submitScore);
 
 
@@ -188,15 +182,24 @@ function displayHighscore() {
   quizEnd.style.display = "none";
   highscoreView.style.display = "flex";
   hideQuiz();
-
-  var lastScore = JSON.parse(localStorage.getItem("nameScoreStringify"));
-
-
+  renderHighscores();
 
 }
 
 
 
+function renderHighscores() {
+  highscorePrevious.innerHTML = "";
+
+  lastScore = JSON.parse(localStorage.getItem("nameScoreStringify"));
+  /* var lastScore = JSON.parse(localStorage.getItem("nameScoreStringify")); */
+  for (i = 0; i < Object.keys(lastScore).length; i++) {
+    var li = document.createElement("li");
+    var text = document.createTextNode(lastScore.userScore[0] + ": " + lastScore.userScore[1])
+    li.appendChild(text);
+    highscorePrevious.appendChild(li);
+  }
+}
 function hideQuiz() {
   q1.style.display = "none";
   q2.style.display = "none";
@@ -214,18 +217,12 @@ function hideQuiz() {
 
 //Game ends when all questions are answered or timer reaches 0
 
-//When game ends a prompt to save user's initial and highscore appears
-/* function submitScore(event) {
-  var userName = document.querySelector("#userName").value;
-  var points = secondsLeft;
-  console.log(points);
-  event.preventDefault();
-  displayHighscore();
-} */
+
 
 //clear highscore when button is pressed
 function clearHighscore() {
   localStorage.clear();
+  displayHighscore();
 }
 
 
