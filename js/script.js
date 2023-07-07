@@ -203,6 +203,7 @@ function displayHome() {
 }
 
 function displayHighscore() {
+  clearInterval(timeinterval);
   startScreen.style.display = "none";
   quizEnd.style.display = "none";
   highscoreView.style.display = "flex";
