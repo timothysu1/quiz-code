@@ -40,10 +40,7 @@ returnHome.addEventListener("click", displayHome);
 
 clearScores.addEventListener("click", clearHighscore);
 
-/* submitBtn.addEventListener("click", submitScore);
- */
 //timer starts and question appears
-
 
 function startGame(){
   secondsLeft = 60
@@ -90,8 +87,7 @@ function displayQ5() {
   q5.style.display = "flex";
 }
 
-
-
+//Game ends when all questions are answered or timer reaches 0
 
 function gameEnd() {
   clearInterval(timeinterval);
@@ -107,8 +103,7 @@ function gameEnd() {
 
 }
 
-
-
+//When question is answered correctly
 
 response1.forEach(function (elem) {
   elem.addEventListener("click", answerQ1)
@@ -131,7 +126,10 @@ response5.forEach(function (elem) {
 });
 
 
-//
+//Another question is shown
+//When a question is answered incorrectly
+//time is removed from timer (~10sec)
+
 function answerQ1(event) {
   if (event.target.className == "response1 wrong") {
     secondsLeft -= 15;
@@ -196,11 +194,6 @@ function submitScore(event) {
 }
 submitBtn.addEventListener("click", submitScore);
 
-
-
-
-
-
 //startscreen disapears and first question appears
 function displayHome() {
   secondsLeft = 60;
@@ -217,13 +210,9 @@ function displayHighscore() {
   renderHighscores();
 }
 
-
-
 function renderHighscores() {
   highscorePrevious.innerHTML = "";
-
   lastScore = JSON.parse(localStorage.getItem("nameScoreStringify"));
-  /* var lastScore = JSON.parse(localStorage.getItem("nameScoreStringify")); */
   for (i = 0; i < Object.keys(lastScore).length; i++) {
     var li = document.createElement("li");
     var text = document.createTextNode(Object.keys(lastScore)[i] + ": " + Object.values(lastScore)[i])
@@ -238,25 +227,12 @@ function hideQuiz() {
   q4.style.display = "none";
   q5.style.display = "none";
 }
-//When question is answered correctly
-
-//Another question is shown
-
-//When a question is answered incorrectly
-
-//time is removed from timer (~10sec)
-
-//Game ends when all questions are answered or timer reaches 0
-
-
 
 //clear highscore when button is pressed
 function clearHighscore() {
   localStorage.clear();
   displayHighscore();
 }
-
-
 
 function init() {
   quizEnd.style.display = "none";
