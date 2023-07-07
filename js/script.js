@@ -9,6 +9,8 @@ var quizQame = document.querySelector(".quiz-game");
 var quizEnd = document.querySelector(".quiz-end");
 var highscoreView = document.querySelector(".highscore-view");
 var highscoreRedirect = document.querySelector(".highscore-redirect");
+var scoreValue = document.querySelector(".score-value");
+
 
 var q1 = document.querySelector(".q1")
 var q2 = document.querySelector(".q2")
@@ -16,11 +18,13 @@ var q3 = document.querySelector(".q3")
 var q4 = document.querySelector(".q4")
 var q5 = document.querySelector(".q5")
 
-var response1 = document.querySelector(".response1")
-var response2 = document.querySelector(".response2")
-var response3 = document.querySelector(".response3")
-var response4 = document.querySelector(".response4")
-var response5 = document.querySelector(".response5")
+var response1 = document.querySelectorAll(".response1")
+var response2 = document.querySelectorAll(".response2")
+var response3 = document.querySelectorAll(".response3")
+var response4 = document.querySelectorAll(".response4")
+var response5 = document.querySelectorAll(".response5")
+
+var nameScore = {};
 
 
 
@@ -33,8 +37,8 @@ returnHome.addEventListener("click", displayHome);
 
 clearScores.addEventListener("click", clearHighscore);
 
-submitBtn.addEventListener("click", submitScore);
-
+/* submitBtn.addEventListener("click", submitScore);
+ */
 //timer starts and question appears
 
 
@@ -43,11 +47,10 @@ function startGame() {
   var timeinterval = setInterval(function () {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
-    if (secondsLeft === 0) {
-      clearInterval(timeinterval);
+    if (secondsLeft <= 0) {
       displayEnd();
-
     }
+
   }, 1000);
 
   displayQ1();
@@ -76,35 +79,98 @@ function startGame() {
     quizEnd.style.display = "flex";
     hideQuiz();
     clearInterval(timeinterval);
-  } 
-  
-  response1.addEventListener("click", answerQ1);
-  response2.addEventListener("click", answerQ2);
-  response3.addEventListener("click", answerQ3);
-  response4.addEventListener("click", answerQ4);
-  response5.addEventListener("click", answerQ5);
+    if (secondsLeft < 0) {
+      secondsLeft = 0;
+      timerEl.textContent = secondsLeft;
+    }
+    scoreValue.textContent = secondsLeft;
+    return(secondsLeft);
 
-  function answerQ1() {
-    q1.style.display = "none";
-    q2.style.display = "flex";
   }
 
-  function answerQ2() {
-    displayQ3();
+  response1.forEach(function (elem) {
+    elem.addEventListener("click", answerQ1)
+  });
+
+  response2.forEach(function (elem) {
+    elem.addEventListener("click", answerQ2)
+  });
+
+  response3.forEach(function (elem) {
+    elem.addEventListener("click", answerQ3)
+  });
+
+  response4.forEach(function (elem) {
+    elem.addEventListener("click", answerQ4)
+  });
+
+  response5.forEach(function (elem) {
+    elem.addEventListener("click", answerQ5)
+  });
+
+  function answerQ1(event) {
+    if (event.target.className == "response1 wrong") {
+      secondsLeft -= 15;
+      timerEl.textContent = secondsLeft;
+      displayQ2();
+    } else {
+      displayQ2();
+    }
   }
 
-  function answerQ3() {
-    displayQ4();
+  function answerQ2(event) {
+    if (event.target.className == "response2 wrong") {
+      secondsLeft -= 15;
+      timerEl.textContent = secondsLeft;
+      displayQ3();
+    } else {
+      displayQ3();
+    }
   }
 
-  function answerQ4() {
-    displayQ5();
+  function answerQ3(event) {
+    if (event.target.className == "response3 wrong") {
+      secondsLeft -= 15;
+      timerEl.textContent = secondsLeft;
+      displayQ4();
+    } else {
+      displayQ4();
+    }
+  }
+  function answerQ4(event) {
+    if (event.target.className == "response4 wrong") {
+      secondsLeft -= 15;
+      timerEl.textContent = secondsLeft;
+      displayQ5();
+    } else {
+      displayQ5();
+    }
+  }
+  function answerQ5(event) {
+    if (event.target.className == "response5 wrong") {
+      secondsLeft -= 15;
+      timerEl.textContent = secondsLeft;
+      displayEnd();
+    } else {
+      displayEnd();
+    }
   }
 
-  function answerQ5() {
-    displayEnd();
+
+  function submitScore(event) {
+  var userName = document.querySelector("#userName").value;
+  var points = secondsLeft;
+  event.preventDefault();
+  if (userName ===""){
+    displayHighscore();
   }
+  displayHighscore();
 }
+submitBtn.addEventListener("click", submitScore);
+
+
+}
+
 
 
 //startscreen disapears and first question appears
@@ -117,7 +183,6 @@ function displayHome() {
 
 function displayHighscore() {
   startScreen.style.display = "none";
-  /* quizQame.style.display = "none"; */
   quizEnd.style.display = "none";
   highscoreView.style.display = "flex";
   hideQuiz();
@@ -143,9 +208,13 @@ function hideQuiz() {
 //Game ends when all questions are answered or timer reaches 0
 
 //When game ends a prompt to save user's initial and highscore appears
-function submitScore() {
+/* function submitScore(event) {
+  var userName = document.querySelector("#userName").value;
+  var points = secondsLeft;
+  console.log(points);
+  event.preventDefault();
   displayHighscore();
-}
+} */
 
 //clear highscore when button is pressed
 function clearHighscore() {
@@ -158,5 +227,6 @@ function init() {
   quizEnd.style.display = "none";
   highscoreView.style.display = "none";
   hideQuiz();
+  console.log(response1)
 }
 init();

@@ -28,6 +28,22 @@ header {
   align-items: center;
 } */
 
+.response1,
+.response2,
+.response3,
+.response4,
+.response5{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 25px;
+  background-color: aqua;
+  margin: 5px;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .q1,
 .q2,
 .q3,
