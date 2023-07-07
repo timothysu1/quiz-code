@@ -8,7 +8,7 @@ This webpage allows for the user to create a randomly generated password they ca
 * [Git](https://git-scm.com/)
 ## Deployed Link
 
-* [See Live Site]()
+* [See Live Site](https://timothysu1.github.io/quiz-code/)
 
 ## Usage
 
@@ -33,7 +33,7 @@ This webpage allows for the user to create a randomly generated password they ca
 
 
 ## Credits
-
+https://stackoverflow.com/questions/40956717/how-to-addeventlistener-to-multiple-elements-in-a-single-line
 
 ## License
 

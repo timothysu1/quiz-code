@@ -27,7 +27,7 @@ var response5 = document.querySelectorAll(".response5")
 
 var nameScore = {};
 var lastScore = {};
-
+var secondsLeft =60;
 
 //click start button
 startBtn.addEventListener("click", startGame);
@@ -44,7 +44,7 @@ clearScores.addEventListener("click", clearHighscore);
 
 
 function startGame() {
-  var secondsLeft = 60;
+  secondsLeft = 60;
   var timeinterval = setInterval(function () {
     secondsLeft--;
     timerEl.textContent = secondsLeft;
@@ -144,6 +144,7 @@ function startGame() {
   function answerQ5(event) {
     if (event.target.className == "response5 wrong") {
       secondsLeft -= 15;
+      timerEl.textContent = secondsLeft;
     }
     displayEnd();
   }
@@ -155,14 +156,26 @@ function startGame() {
       return;
     } else {
       var nameScore = {
-        userScore: [document.querySelector("#userName").value.trim(), secondsLeft]
+        [document.querySelector("#userName").value.trim()]: secondsLeft
       };
-      localStorage.setItem("nameScoreStringify", JSON.stringify(nameScore));
+      lastScore = JSON.parse(localStorage.getItem("nameScoreStringify"));
+      
+      var newScore = {
+        ...nameScore,
+        ...lastScore
+      };
+
+      console.log(newScore);
+
+
+      localStorage.setItem("nameScoreStringify", JSON.stringify(newScore));
 
       displayHighscore();
     }
   }
   submitBtn.addEventListener("click", submitScore);
+
+
 
 
 }
@@ -171,8 +184,6 @@ function startGame() {
 
 //startscreen disapears and first question appears
 function displayHome() {
-  secondsLeft = 60;
-  timerEl.textContent = secondsLeft;
   highscoreView.style.display = "none";
   startScreen.style.display = "flex";
 }
@@ -183,7 +194,6 @@ function displayHighscore() {
   highscoreView.style.display = "flex";
   hideQuiz();
   renderHighscores();
-
 }
 
 
@@ -195,7 +205,7 @@ function renderHighscores() {
   /* var lastScore = JSON.parse(localStorage.getItem("nameScoreStringify")); */
   for (i = 0; i < Object.keys(lastScore).length; i++) {
     var li = document.createElement("li");
-    var text = document.createTextNode(lastScore.userScore[0] + ": " + lastScore.userScore[1])
+    var text = document.createTextNode(Object.keys(lastScore)[i] + ": " + Object.values(lastScore)[i])
     li.appendChild(text);
     highscorePrevious.appendChild(li);
   }
@@ -222,7 +232,6 @@ function hideQuiz() {
 //clear highscore when button is pressed
 function clearHighscore() {
   localStorage.clear();
-  displayHighscore();
 }
 
 
@@ -231,6 +240,5 @@ function init() {
   quizEnd.style.display = "none";
   highscoreView.style.display = "none";
   hideQuiz();
-  console.log(response1)
 }
 init();
